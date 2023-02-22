@@ -40,7 +40,7 @@ public class Chat {
 	@Embedded
 	private HashSet<UserDto> users =new HashSet<>();
 	
-	@OneToMany(mappedBy = "chat",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
 	private ArrayList<Message> messages=new ArrayList<>();
 
 	public Chat() {

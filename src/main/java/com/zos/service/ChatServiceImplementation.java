@@ -13,7 +13,7 @@ public class ChatServiceImplementation implements ChatService {
 	private ChatRepository chatRepo;
 
 	@Override
-	public Chat createChat(Integer reqUserId, Integer userId2) throws UserException {
+	public Chat createChat(Integer reqUserId, Integer userId2, boolean isGroup) throws UserException {
 		// TODO Auto-generated method stub
 		
 		UserDto reqUser=userService.findUserById(reqUserId);
@@ -23,8 +23,10 @@ public class ChatServiceImplementation implements ChatService {
 		
 		Chat chat=new Chat();
 		
+		chat.setCreated_by(reqUser);
 		chat.getUsers().add(reqUser);
 		chat.getUsers().add(user2);
+		chat.setIs_group(isGroup);
 		
 		return chatRepo.save(chat);
 	}

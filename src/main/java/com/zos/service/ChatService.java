@@ -6,7 +6,7 @@ import com.zos.modal.Chat;
 
 public interface ChatService {
 
-	public Chat createChat(Integer reqUserId, Integer userId2) throws UserException;
+	public Chat createChat(Integer reqUserId, Integer userId2, boolean isGroup) throws UserException;
 	
 	public Chat findChatById(Integer chatId) throws ChatException;
 	
