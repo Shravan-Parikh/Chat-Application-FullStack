@@ -1,5 +1,10 @@
 package com.zos.service;
 
-public class UserService {
+import com.zos.dto.UserDto;
+import com.zos.exception.UserException;
+import com.zos.modal.User;
 
+public interface UserService {
+
+	public User registerUser(User user) throws UserException;
 }

@@ -28,7 +28,9 @@ public class User {
 	private List<Notification> notifications=new ArrayList<>();
 	
 	
-	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public User(Integer id, String full_name, String email, String profile_picture, String password,
 			List<Notification> notifications) {

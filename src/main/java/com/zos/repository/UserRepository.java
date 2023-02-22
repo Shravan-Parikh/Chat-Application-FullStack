@@ -1,5 +1,11 @@
 package com.zos.repository;
 
-public class UserRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.zos.modal.User;
+
+public interface UserRepository extends JpaRepository<User, Integer> {
+	
+	public User findByEmail(String email);
 
 }
