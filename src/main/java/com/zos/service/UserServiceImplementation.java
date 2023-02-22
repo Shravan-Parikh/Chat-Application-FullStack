@@ -1,10 +1,11 @@
 package com.zos.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.zos.dto.UserDto;
 import com.zos.exception.UserException;
 import com.zos.modal.User;
 import com.zos.repository.UserRepository;
@@ -29,6 +30,19 @@ public class UserServiceImplementation implements UserService {
 		newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 		
 		return userRepo.save(newUser);
+	}
+
+	@Override
+	public User updateUser(Integer userId, User user) throws UserException {
+		// TODO Auto-generated method stub
+		
+		Optional<User> opt=userRepo.findById(userId);
+		
+		if(opt.isPresent()) {
+			return userRepo.save(user);
+		}
+		
+		throw new UserException("user not found with id "+userId);
 	}
 
 }
