@@ -12,7 +12,7 @@ public interface ChatService {
 	
 	public Chat findAllChatByUserId(Integer userId) throws UserException;
 	
-	public Chat deleteChat(Integer chatId) throws ChatException;
+	public Chat deleteChat(Integer chatId, Integer userId) throws ChatException, UserException;
 	
 	
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ public class ChatController {
 	@Autowired
 	private ChatService chatService;
 	
+	@PostMapping("/chat/create")
 	public ResponseEntity<Chat> creatChatHandler(@RequestBody Map<String, Object> data) throws UserException{
 		
 		Integer reqUserId=(int)data.get("reqUserId");
