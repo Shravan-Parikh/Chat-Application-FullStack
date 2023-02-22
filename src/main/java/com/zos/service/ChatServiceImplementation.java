@@ -65,6 +65,8 @@ public class ChatServiceImplementation implements ChatService {
 		
 		if((chat.getCreated_by().getId()==user.getId()) && !chat.getIs_group() ) {
 			chatRepo.deleteById(chat.getId());
+			
+			return chat;
 		}
 		
 		throw new ChatException("you dont have access to delete this chat");

@@ -5,10 +5,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zos.exception.ChatException;
 import com.zos.exception.UserException;
 import com.zos.modal.Chat;
 import com.zos.repository.ChatRepository;
@@ -30,6 +33,14 @@ public class ChatController {
 		boolean isGroup=(boolean)data.get("isGroup");
 		
 		Chat chat=chatService.createChat(reqUserId,userId2,isGroup);
+		
+		return new ResponseEntity<Chat>(chat,HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/chat/delete/{chatId)/{userId}")
+	public ResponseEntity<Chat> deleteChatHandler(@PathVariable Integer chatId, @PathVariable Integer userId) throws ChatException, UserException{
+		
+		Chat chat=chatService.deleteChat(chatId, userId);
 		
 		return new ResponseEntity<Chat>(chat,HttpStatus.OK);
 	}
