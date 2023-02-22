@@ -37,7 +37,7 @@ public class ChatController {
 		return new ResponseEntity<Chat>(chat,HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/chat/delete/{chatId)/{userId}")
+	@DeleteMapping("/chat/delete/{chatId}/{userId}")
 	public ResponseEntity<Chat> deleteChatHandler(@PathVariable Integer chatId, @PathVariable Integer userId) throws ChatException, UserException{
 		
 		Chat chat=chatService.deleteChat(chatId, userId);
