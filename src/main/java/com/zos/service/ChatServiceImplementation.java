@@ -1,5 +1,6 @@
 package com.zos.service;
 
+import com.zos.dto.UserDto;
 import com.zos.exception.ChatException;
 import com.zos.exception.UserException;
 import com.zos.modal.Chat;
@@ -15,8 +16,17 @@ public class ChatServiceImplementation implements ChatService {
 	public Chat createChat(Integer reqUserId, Integer userId2) throws UserException {
 		// TODO Auto-generated method stub
 		
-//		User reqUser=userService
-		return null;
+		UserDto reqUser=userService.findUserById(reqUserId);
+		UserDto user2 = userService.findUserById(userId2);
+		
+		
+		
+		Chat chat=new Chat();
+		
+		chat.getUsers().add(reqUser);
+		chat.getUsers().add(user2);
+		
+		return chatRepo.save(chat);
 	}
 
 	@Override
