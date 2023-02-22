@@ -2,8 +2,10 @@ package com.zos.exception;
 
 import java.time.LocalDateTime;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -24,6 +26,17 @@ public class GlobleException {
 	public ResponseEntity<ErrorDetail> MessageExceptionHandler(MessageException ue,WebRequest req){
 		
 		ErrorDetail err =new ErrorDetail(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
+		
+		return new ResponseEntity<ErrorDetail>(err,HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ErrorDetail> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException me){
+		
+		String error = me.getBindingResult().getFieldError().getDefaultMessage();
+                
+		
+		ErrorDetail err =new ErrorDetail("Validation Error",error ,LocalDateTime.now());
 		
 		return new ResponseEntity<ErrorDetail>(err,HttpStatus.BAD_REQUEST);
 	}
