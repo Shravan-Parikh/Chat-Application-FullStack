@@ -8,4 +8,6 @@ public interface UserService {
 
 	public User registerUser(User user) throws UserException;
 	public User updateUser(Integer userId, User user) throws UserException;
+	
+	public UserDto findUserById(Integer userId) throws UserException;
 }
