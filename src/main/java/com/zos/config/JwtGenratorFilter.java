@@ -1,13 +1,16 @@
 package com.zos.config;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.crypto.SecretKey;
 
 
 import org.springframework.security.core.Authentication;
-
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -34,7 +37,7 @@ public class JwtGenratorFilter extends OncePerRequestFilter{
 				.setIssuer("zos academy")
 				.setSubject("jwt_token")
 				.claim("username",authentication.getName())
-				.claim("authorities",authentication.getAuthorities())
+				.claim("authorities", populateAuthorities(authentication.getAuthorities()))
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(new Date().getTime()+ 48900000))
 				.signWith(key).compact();
@@ -46,6 +49,17 @@ public class JwtGenratorFilter extends OncePerRequestFilter{
 		filterChain.doFilter(request, response);
 	}
 	
+    private String populateAuthorities(Collection<? extends GrantedAuthority> collection) {
+        
+    	Set<String> authoritiesSet = new HashSet<>();
+        
+        for (GrantedAuthority authority : collection) {
+            authoritiesSet.add(authority.getAuthority());
+        }
+        return String.join(",", authoritiesSet);
+   
+    
+    }
 	
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
