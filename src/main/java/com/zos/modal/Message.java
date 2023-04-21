@@ -28,9 +28,8 @@ public class Message {
 	private LocalDateTime timeStamp;
 	private Boolean is_read;
 	
-	@Embedded
-	@AttributeOverride(name="id", column=@Column(name="user_id"))
-	private UserDto userDto;
+	@ManyToOne
+	private User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="chat_id")
@@ -40,16 +39,15 @@ public class Message {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	public Message(Integer id, String content, LocalDateTime timeStamp, Boolean is_read, UserDto userDto) {
+	public Message(Integer id, String content, LocalDateTime timeStamp, Boolean is_read, User user, Chat chat) {
 		super();
 		this.id = id;
 		this.content = content;
 		this.timeStamp = timeStamp;
 		this.is_read = is_read;
-		this.userDto = userDto;
+		this.user = user;
+		this.chat = chat;
 	}
-
 
 	public String getContent() {
 		return content;
@@ -57,12 +55,23 @@ public class Message {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public UserDto getUserDto() {
-		return userDto;
+	
+	public User getUser() {
+		return user;
 	}
-	public void setUserDto(UserDto userDto) {
-		this.userDto = userDto;
+
+	public void setUser(User user) {
+		this.user = user;
 	}
+
+	public Chat getChat() {
+		return chat;
+	}
+
+	public void setChat(Chat chat) {
+		this.chat = chat;
+	}
+
 	public LocalDateTime getTimeStamp() {
 		return timeStamp;
 	}

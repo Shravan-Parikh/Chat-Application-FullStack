@@ -8,6 +8,7 @@ import com.zos.dto.UserDto;
 import com.zos.exception.ChatException;
 import com.zos.exception.UserException;
 import com.zos.modal.Chat;
+import com.zos.modal.User;
 import com.zos.repository.ChatRepository;
 
 @Service
@@ -21,8 +22,8 @@ public class ChatServiceImplementation implements ChatService {
 	public Chat createChat(Integer reqUserId, Integer userId2, boolean isGroup) throws UserException {
 		// TODO Auto-generated method stub
 		
-		UserDto reqUser=userService.findUserById(reqUserId);
-		UserDto user2 = userService.findUserById(userId2);
+		User reqUser=userService.findUserById(reqUserId);
+		User user2 = userService.findUserById(userId2);
 		
 		
 		
@@ -60,7 +61,7 @@ public class ChatServiceImplementation implements ChatService {
 	public Chat deleteChat(Integer chatId, Integer userId) throws ChatException, UserException {
 		// TODO Auto-generated method stub
 		
-		UserDto user=userService.findUserById(userId);
+		User user=userService.findUserById(userId);
 		Chat chat=findChatById(chatId);
 		
 		if((chat.getCreated_by().getId()==user.getId()) && !chat.getIs_group() ) {

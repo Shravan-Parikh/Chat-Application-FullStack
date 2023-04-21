@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zos.controller.mapper.UserDtoMapper;
+import com.zos.dto.UserDto;
 import com.zos.exception.UserException;
 import com.zos.modal.User;
 import com.zos.service.UserService;
@@ -18,19 +20,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/signup")
-	public ResponseEntity<User> registerUserHandler(@RequestBody User user) throws UserException{
-		
-		User registeredUser=userService.registerUser(user);
-		return new ResponseEntity<User>(registeredUser,HttpStatus.OK);
-	}
-	
 	
 	@PutMapping("/user/update/{userId}")
-	public ResponseEntity<User> updateUserHandler(@RequestBody User user, @PathVariable Integer userId) throws UserException{
+	public ResponseEntity<UserDto> updateUserHandler(@RequestBody User user, @PathVariable Integer userId) throws UserException{
 		User updatedUser=userService.updateUser(userId, user);
-		
-		return new ResponseEntity<User>(updatedUser,HttpStatus.OK);
+		UserDto userDto=UserDtoMapper.toUserDTO(updatedUser);
+
+		return new ResponseEntity<UserDto>(userDto,HttpStatus.OK);
 	}
 
 }

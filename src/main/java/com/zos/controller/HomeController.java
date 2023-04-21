@@ -11,7 +11,7 @@ public class HomeController {
 	@GetMapping("/")
 	public ResponseEntity<String> homePageHandler(){
 		
-		return new ResponseEntity<String> ("What's up api using spring boot",HttpStatus.OK);
+		return new ResponseEntity<String> ("What's App api using spring boot",HttpStatus.OK);
 	}
 
 }

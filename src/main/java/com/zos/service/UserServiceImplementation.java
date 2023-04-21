@@ -47,20 +47,14 @@ public class UserServiceImplementation implements UserService {
 	}
 
 	@Override
-	public UserDto findUserById(Integer userId) throws UserException {
+	public User findUserById(Integer userId) throws UserException {
 		
 		Optional<User> opt=userRepo.findById(userId);
 		
 		if(opt.isPresent()) {
 			User user=opt.get();
-			UserDto userDto=new UserDto();
 			
-			userDto.setEmail(user.getEmail());
-			userDto.setFull_name(user.getFull_name());
-			userDto.setProfile_pic(user.getProfile_picture());
-			userDto.setId(user.getId());
-			
-			return userDto;
+			return user;
 		}
 		throw new UserException("user not exist with id "+userId);
 	}

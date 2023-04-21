@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zos.controller.mapper.ChatDtoMapper;
+import com.zos.dto.ChatDto;
 import com.zos.exception.ChatException;
 import com.zos.exception.UserException;
 import com.zos.modal.Chat;
@@ -26,22 +28,24 @@ public class ChatController {
 	private ChatService chatService;
 	
 	@PostMapping("/chat/create")
-	public ResponseEntity<Chat> creatChatHandler(@RequestBody Map<String, Object> data) throws UserException{
+	public ResponseEntity<ChatDto> creatChatHandler(@RequestBody Map<String, Object> data) throws UserException{
 		
 		Integer reqUserId=(int)data.get("reqUserId");
 		Integer userId2=(int)data.get("userId2");
 		boolean isGroup=(boolean)data.get("isGroup");
 		
 		Chat chat=chatService.createChat(reqUserId,userId2,isGroup);
+		ChatDto chatDto=ChatDtoMapper.toChatDto(chat);
 		
-		return new ResponseEntity<Chat>(chat,HttpStatus.OK);
+		return new ResponseEntity<ChatDto>(chatDto,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/chat/delete/{chatId}/{userId}")
-	public ResponseEntity<Chat> deleteChatHandler(@PathVariable Integer chatId, @PathVariable Integer userId) throws ChatException, UserException{
+	public ResponseEntity<ChatDto> deleteChatHandler(@PathVariable Integer chatId, @PathVariable Integer userId) throws ChatException, UserException{
 		
 		Chat chat=chatService.deleteChat(chatId, userId);
+		ChatDto chatDto=ChatDtoMapper.toChatDto(chat);
 		
-		return new ResponseEntity<Chat>(chat,HttpStatus.OK);
+		return new ResponseEntity<ChatDto>(chatDto,HttpStatus.OK);
 	}
 }
