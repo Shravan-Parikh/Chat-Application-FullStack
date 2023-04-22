@@ -28,6 +28,7 @@ public class MessageServiceImplement implements MessageService{
 	@Autowired
 	private ChatService chatService;
 	
+	  
 
 	@Override
 	public Message sendMessage(SendMessageRequest req) throws UserException, ChatException {

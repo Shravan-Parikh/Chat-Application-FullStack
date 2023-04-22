@@ -12,10 +12,10 @@ public interface MessageService  {
 	
 	public Message sendMessage(SendMessageRequest req) throws UserException, ChatException;
 	
-	public String deleteMessage(Integer messageId) throws MessageException;
-	
 	public List<Message> getChatsMessages(Integer chatId) throws ChatException;
 	
 	public Message findMessageById(Integer messageId) throws MessageException;
+	
+	public String deleteMessage(Integer messageId) throws MessageException;
 
 }
