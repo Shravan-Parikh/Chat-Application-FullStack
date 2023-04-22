@@ -3,11 +3,9 @@ package com.zos.dto;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import com.zos.modal.User;
+import java.util.Set;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
 
 
 public class ChatDto {
@@ -19,11 +17,11 @@ public class ChatDto {
 	@Column(columnDefinition = "boolean default false")
 	private Boolean is_group;
 	
-	private HashSet<UserDto> admins;
+	private Set<UserDto> admins= new HashSet<>();
 	
 	private UserDto created_by;
 
-	private HashSet<UserDto> users =new HashSet<>();
+	private Set<UserDto> users = new HashSet<>();
 	
 	private List<MessageDto> messages=new ArrayList<>();
 
@@ -33,7 +31,7 @@ public class ChatDto {
 
 	
 	public ChatDto(String chat_name, String chat_image, Boolean is_group, HashSet<UserDto> admins, UserDto created_by,
-			HashSet<UserDto> users, List<MessageDto> messages) {
+			Set<UserDto> users, List<MessageDto> messages) {
 		super();
 		this.chat_name = chat_name;
 		this.chat_image = chat_image;
@@ -45,11 +43,11 @@ public class ChatDto {
 	}
 
 
-	public HashSet<UserDto> getAdmins() {
+	public Set<UserDto> getAdmins() {
 		return admins;
 	}
 
-	public void setAdmins(HashSet<UserDto> admins) {
+	public void setAdmins(Set<UserDto> admins) {
 		this.admins = admins;
 	}
 
@@ -91,11 +89,11 @@ public class ChatDto {
 		this.created_by = created_by;
 	}
 
-	public HashSet<UserDto> getUsers() {
+	public Set<UserDto> getUsers() {
 		return users;
 	}
 
-	public void setUsers(HashSet<UserDto> users) {
+	public void setUsers(Set<UserDto> users) {
 		this.users = users;
 	}
 	

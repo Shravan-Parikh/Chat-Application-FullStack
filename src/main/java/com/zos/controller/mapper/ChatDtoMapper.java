@@ -1,7 +1,10 @@
 package com.zos.controller.mapper;
 
-import java.util.HashSet;
+
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.zos.dto.ChatDto;
 import com.zos.dto.MessageDto;
@@ -14,8 +17,8 @@ public class ChatDtoMapper {
 		
 		UserDto userDto=UserDtoMapper.toUserDTO(chat.getCreated_by());
 		List<MessageDto> messageDtos=MessageDtoMapper.toMessageDtos(chat.getMessages());
-		HashSet<UserDto> userDtos=UserDtoMapper.toUserDtos(chat.getUsers());
-		HashSet<UserDto> admins=UserDtoMapper.toUserDtos(chat.getAdmins());
+		Set<UserDto> userDtos=UserDtoMapper.toUserDtos(chat.getUsers());
+		Set<UserDto> admins=UserDtoMapper.toUserDtos(chat.getAdmins());
 		
 		ChatDto chatDto=new ChatDto();
 		
@@ -29,6 +32,18 @@ public class ChatDtoMapper {
 		
 		
 		return chatDto;
+	}
+	
+	public static List<ChatDto> toChatDtos(List<Chat> chats){
+		
+		List<ChatDto> chatDtos=new ArrayList<>();
+		
+		for(Chat chat:chats) {
+			ChatDto chatDto=toChatDto(chat);
+			chatDtos.add(chatDto);
+		}
+		
+		return chatDtos;
 	}
 
 }

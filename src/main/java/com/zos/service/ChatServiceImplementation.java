@@ -26,7 +26,11 @@ public class ChatServiceImplementation implements ChatService {
 		User reqUser=userService.findUserById(reqUserId);
 		User user2 = userService.findUserById(userId2);
 		
+		Chat isChatExist = chatRepo.findSingleChatByUsersId(user2.getId(), reqUser.getId());
 		
+		if(isChatExist!=null) {
+			return isChatExist;
+		}
 		
 		Chat chat=new Chat();
 		
@@ -68,7 +72,7 @@ public class ChatServiceImplementation implements ChatService {
 		User user=userService.findUserById(userId);
 		Chat chat=findChatById(chatId);
 		
-		if((chat.getCreated_by().getId()==user.getId()) && !chat.getIs_group() ) {
+		if((chat.getCreated_by().getId().equals(user.getId())) && !chat.getIs_group() ) {
 			chatRepo.deleteById(chat.getId());
 			
 			return chat;
