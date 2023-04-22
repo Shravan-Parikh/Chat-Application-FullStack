@@ -1,5 +1,6 @@
 package com.zos.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class ChatServiceImplementation implements ChatService {
 		chat.setCreated_by(reqUser);
 		chat.getUsers().add(reqUser);
 		chat.getUsers().add(user2);
-		chat.setIs_group(isGroup);
+		chat.setIs_group(false);
 		
 		return chatRepo.save(chat);
 	}
@@ -42,7 +43,7 @@ public class ChatServiceImplementation implements ChatService {
 
 	@Override
 	public Chat findChatById(Integer chatId) throws ChatException {
-		// TODO Auto-generated method stub
+		
 		Optional<Chat> chat =chatRepo.findById(chatId);
 		
 		if(chat.isPresent()) {
@@ -52,14 +53,17 @@ public class ChatServiceImplementation implements ChatService {
 	}
 
 	@Override
-	public Chat findAllChatByUserId(Integer userId) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Chat> findAllChatByUserId(Integer userId) throws UserException {
+		
+		User user=userService.findUserById(userId);
+		
+		List<Chat> chats=chatRepo.findChatByUserId(user.getId());
+		
+		return chats;
 	}
 	
 	@Override
 	public Chat deleteChat(Integer chatId, Integer userId) throws ChatException, UserException {
-		// TODO Auto-generated method stub
 		
 		User user=userService.findUserById(userId);
 		Chat chat=findChatById(chatId);
@@ -71,6 +75,74 @@ public class ChatServiceImplementation implements ChatService {
 		}
 		
 		throw new ChatException("you dont have access to delete this chat");
+	}
+
+
+
+
+	@Override
+	public Chat createGroup(List<Integer> userIds,Integer reqUserId) throws UserException {
+		
+		User reqUser=userService.findUserById(reqUserId);
+		
+		Chat chat=new Chat();
+		
+		chat.setCreated_by(reqUser);
+		chat.getUsers().add(reqUser);
+		chat.setIs_group(false);
+		
+		for(Integer userId:userIds) {
+			User user =userService.findUserById(userId);
+			if(user!=null)chat.getUsers().add(user);
+		}
+		
+		return chatRepo.save(chat);
+		
+	}
+
+
+	@Override
+	public Chat addUserToGroup(Integer userId, Integer chatId) throws UserException, ChatException {
+		
+		Chat chat =findChatById(chatId);
+		User user=userService.findUserById(userId);
+		
+		chat.getUsers().add(user);
+		
+		
+		Chat updatedChat=chatRepo.save(chat);
+		
+		return updatedChat;
+	}
+
+
+
+
+	@Override
+	public Chat renameGroup(Integer chatId, String groupName, Integer reqUserId) throws ChatException, UserException {
+		
+		Chat chat=findChatById(chatId);
+		User user=userService.findUserById(reqUserId);
+		
+		
+		if(chat.getUsers().contains(user))
+		chat.setChat_name(groupName);
+		
+		return chatRepo.save(chat);
+	}
+
+	@Override
+	public Chat removeFromGroup(Integer chatId, Integer userId, Integer reqUserId) throws UserException, ChatException {
+		Chat chat=findChatById(chatId);
+		User user=userService.findUserById(userId);
+		
+		User reqUser=userService.findUserById(reqUserId);
+		
+		if(user.getId().equals(reqUser.getId()) ) {
+			chat.getUsers().remove(reqUser);
+		}
+		
+		return null;
 	}
 
 }

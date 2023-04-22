@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zos.controller.mapper.ChatDtoMapper;
@@ -16,10 +18,14 @@ import com.zos.dto.ChatDto;
 import com.zos.exception.ChatException;
 import com.zos.exception.UserException;
 import com.zos.modal.Chat;
+import com.zos.modal.User;
 import com.zos.repository.ChatRepository;
+import com.zos.request.SingleChatRequest;
 import com.zos.service.ChatService;
+import com.zos.service.UserService;
 
 @RestController
+@RequestMapping("/api/chats")
 public class ChatController {
 
 //	private ChatRepository chatRepo;
@@ -27,17 +33,22 @@ public class ChatController {
 	@Autowired
 	private ChatService chatService;
 	
-	@PostMapping("/chat/create")
-	public ResponseEntity<ChatDto> creatChatHandler(@RequestBody Map<String, Object> data) throws UserException{
+	@Autowired
+	private UserService userService;
+	
+	@PostMapping("/single")
+	public ResponseEntity<ChatDto> creatChatHandler(@RequestBody SingleChatRequest singleChatRequest, @RequestHeader  String jwt) throws UserException{
 		
-		Integer reqUserId=(int)data.get("reqUserId");
-		Integer userId2=(int)data.get("userId2");
-		boolean isGroup=(boolean)data.get("isGroup");
+		User reqUser=userService.findUserProfile(jwt);
 		
-		Chat chat=chatService.createChat(reqUserId,userId2,isGroup);
+		Chat chat=chatService.createChat(reqUser.getId(),singleChatRequest.getUserId(),false);
 		ChatDto chatDto=ChatDtoMapper.toChatDto(chat);
 		
 		return new ResponseEntity<ChatDto>(chatDto,HttpStatus.OK);
+	}
+	
+	public ResponseEntity<ChatDto> createGroupHandler(){
+		
 	}
 	
 	@DeleteMapping("/chat/delete/{chatId}/{userId}")

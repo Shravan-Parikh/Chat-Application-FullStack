@@ -15,6 +15,7 @@ public class ChatDtoMapper {
 		UserDto userDto=UserDtoMapper.toUserDTO(chat.getCreated_by());
 		List<MessageDto> messageDtos=MessageDtoMapper.toMessageDtos(chat.getMessages());
 		HashSet<UserDto> userDtos=UserDtoMapper.toUserDtos(chat.getUsers());
+		HashSet<UserDto> admins=UserDtoMapper.toUserDtos(chat.getAdmins());
 		
 		ChatDto chatDto=new ChatDto();
 		
@@ -24,6 +25,7 @@ public class ChatDtoMapper {
 		chatDto.setIs_group(chat.getIs_group());
 		chatDto.setMessages(messageDtos);
 		chatDto.setUsers(userDtos);
+		chatDto.setAdmins(admins);
 		
 		
 		return chatDto;

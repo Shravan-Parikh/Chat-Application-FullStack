@@ -28,6 +28,9 @@ public class Chat {
 	private String chat_name;
 	private String chat_image;
 	
+	@OneToMany
+	private HashSet<User> admins;
+	
 	@Column(columnDefinition = "boolean default false")
 	private Boolean is_group;
 	
@@ -44,16 +47,25 @@ public class Chat {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Chat(Integer id, String chat_name, String chat_image, Boolean is_group, User created_by, HashSet<User> users,
-			ArrayList<Message> messages) {
+	public Chat(Integer id, String chat_name, String chat_image, HashSet<User> admins, Boolean is_group,
+			User created_by, HashSet<User> users, ArrayList<Message> messages) {
 		super();
 		this.id = id;
 		this.chat_name = chat_name;
 		this.chat_image = chat_image;
+		this.admins = admins;
 		this.is_group = is_group;
 		this.created_by = created_by;
 		this.users = users;
 		this.messages = messages;
+	}
+	
+	public HashSet<User> getAdmins() {
+		return admins;
+	}
+
+	public void setAdmins(HashSet<User> admins) {
+		this.admins = admins;
 	}
 
 	public Integer getId() {

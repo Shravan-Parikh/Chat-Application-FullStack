@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import com.zos.modal.User;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
 
 
 public class ChatDto {
@@ -16,6 +19,8 @@ public class ChatDto {
 	@Column(columnDefinition = "boolean default false")
 	private Boolean is_group;
 	
+	private HashSet<UserDto> admins;
+	
 	private UserDto created_by;
 
 	private HashSet<UserDto> users =new HashSet<>();
@@ -25,15 +30,27 @@ public class ChatDto {
 	public ChatDto() {
 		// TODO Auto-generated constructor stub
 	}
-	public ChatDto(String chat_name, String chat_image, Boolean is_group, UserDto created_by, HashSet<UserDto> users,
-			ArrayList<MessageDto> messages) {
+
+	
+	public ChatDto(String chat_name, String chat_image, Boolean is_group, HashSet<UserDto> admins, UserDto created_by,
+			HashSet<UserDto> users, List<MessageDto> messages) {
 		super();
 		this.chat_name = chat_name;
 		this.chat_image = chat_image;
 		this.is_group = is_group;
+		this.admins = admins;
 		this.created_by = created_by;
 		this.users = users;
 		this.messages = messages;
+	}
+
+
+	public HashSet<UserDto> getAdmins() {
+		return admins;
+	}
+
+	public void setAdmins(HashSet<UserDto> admins) {
+		this.admins = admins;
 	}
 
 	public List<MessageDto> getMessages() {
