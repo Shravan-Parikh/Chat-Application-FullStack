@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
 public class GlobleException {
@@ -40,6 +41,12 @@ public class GlobleException {
 		
 		return new ResponseEntity<ErrorDetail>(err,HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<ErrorDetail> handleNoHandlerFoundException(NoHandlerFoundException ex, WebRequest request) {
+        ErrorDetail error = new ErrorDetail("Endpoint not found", ex.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorDetail> otherErrorHandler(Exception e,WebRequest req){

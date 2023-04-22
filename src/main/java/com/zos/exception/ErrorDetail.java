@@ -4,27 +4,27 @@ import java.time.LocalDateTime;
 
 public class ErrorDetail {
 	
-	private String message;
+	private String error;
 	private String detail;
 	private LocalDateTime timestamp;
 	
 	public ErrorDetail() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public ErrorDetail(String message, String detail, LocalDateTime timestamp) {
+	
+	public ErrorDetail(String error, String detail, LocalDateTime timestamp) {
 		super();
-		this.message = message;
+		this.error = error;
 		this.detail = detail;
 		this.timestamp = timestamp;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getError() {
+		return error;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setError(String error) {
+		this.error = error;
 	}
 
 	public String getDetail() {
