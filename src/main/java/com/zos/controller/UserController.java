@@ -20,6 +20,7 @@ import com.zos.controller.mapper.UserDtoMapper;
 import com.zos.dto.UserDto;
 import com.zos.exception.UserException;
 import com.zos.modal.User;
+import com.zos.request.UpdateUserRequest;
 import com.zos.service.UserService;
 
 @RestController
@@ -31,8 +32,9 @@ public class UserController {
 	
 	
 	@PutMapping("/update/{userId}")
-	public ResponseEntity<UserDto> updateUserHandler(@RequestBody User user, @PathVariable Integer userId) throws UserException{
-		User updatedUser=userService.updateUser(userId, user);
+	public ResponseEntity<UserDto> updateUserHandler(@RequestBody UpdateUserRequest req, @PathVariable Integer userId) throws UserException{
+		System.out.println("updated user -------- ");
+		User updatedUser=userService.updateUser(userId, req);
 		UserDto userDto=UserDtoMapper.toUserDTO(updatedUser);
 
 		return new ResponseEntity<UserDto>(userDto,HttpStatus.OK);

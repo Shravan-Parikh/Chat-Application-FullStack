@@ -12,6 +12,7 @@ import com.zos.exception.UserException;
 import com.zos.modal.Chat;
 import com.zos.modal.User;
 import com.zos.repository.ChatRepository;
+import com.zos.request.GroupChatRequest;
 
 @Service
 public class ChatServiceImplementation implements ChatService {
@@ -102,7 +103,7 @@ public class ChatServiceImplementation implements ChatService {
 
 
 	@Override
-	public Chat createGroup(List<Integer> userIds,Integer reqUserId) throws UserException {
+	public Chat createGroup(GroupChatRequest req,Integer reqUserId) throws UserException {
 		
 		User reqUser=userService.findUserById(reqUserId);
 		
@@ -110,12 +111,16 @@ public class ChatServiceImplementation implements ChatService {
 		
 		chat.setCreated_by(reqUser);
 		chat.getUsers().add(reqUser);
-		chat.setIs_group(false);
 		
-		for(Integer userId:userIds) {
+		for(Integer userId:req.getUserIds()) {
 			User user =userService.findUserById(userId);
 			if(user!=null)chat.getUsers().add(user);
 		}
+		
+		chat.setChat_name(req.getChat_name());
+		chat.setChat_image(req.getChat_image());
+		chat.setIs_group(true);
+		chat.getAdmins().add(reqUser);
 		
 		return chatRepo.save(chat);
 		

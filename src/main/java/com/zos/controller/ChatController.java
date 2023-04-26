@@ -58,7 +58,7 @@ public class ChatController {
 		
 		User reqUser=userService.findUserProfile(jwt);
 		
-		Chat chat=chatService.createGroup(groupChatRequest.getUserIds(), reqUser.getId());
+		Chat chat=chatService.createGroup(groupChatRequest, reqUser.getId());
 		ChatDto chatDto=ChatDtoMapper.toChatDto(chat);
 		
 		return new ResponseEntity<ChatDto>(chatDto,HttpStatus.OK);

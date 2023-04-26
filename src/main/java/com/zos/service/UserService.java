@@ -5,12 +5,13 @@ import java.util.List;
 import com.zos.dto.UserDto;
 import com.zos.exception.UserException;
 import com.zos.modal.User;
+import com.zos.request.UpdateUserRequest;
 
 public interface UserService {
 	
 	public User findUserProfile(String jwt);
 	
-	public User updateUser(Integer userId, User user) throws UserException;
+	public User updateUser(Integer userId, UpdateUserRequest req) throws UserException;
 	
 	public User findUserById(Integer userId) throws UserException;
 	

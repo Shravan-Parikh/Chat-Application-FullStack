@@ -13,6 +13,7 @@ import com.zos.dto.UserDto;
 import com.zos.exception.UserException;
 import com.zos.modal.User;
 import com.zos.repository.UserRepository;
+import com.zos.request.UpdateUserRequest;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -27,16 +28,21 @@ public class UserServiceImplementation implements UserService {
 	private JwtTokenProvider jwtTokenProvider;
 
 	@Override
-	public User updateUser(Integer userId, User user) throws UserException {
-		// TODO Auto-generated method stub
+	public User updateUser(Integer userId, UpdateUserRequest req) throws UserException {
 		
-		Optional<User> opt=userRepo.findById(userId);
+		System.out.println("update find user ------- ");
+		User user=findUserById(userId);
 		
-		if(opt.isPresent()) {
-			return userRepo.save(user);
+		System.out.println("update find user ------- "+user);
+		
+		if(req.getFull_name()!=null) {
+			user.setFull_name(req.getFull_name());
+		}
+		if(req.getProfile_picture()!=null) {
+			user.setProfile_picture(req.getProfile_picture());
 		}
 		
-		throw new UserException("user not found with id "+userId);
+		return userRepo.save(user);
 	}
 
 	@Override

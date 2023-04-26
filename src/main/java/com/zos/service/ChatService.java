@@ -5,6 +5,7 @@ import java.util.List;
 import com.zos.exception.ChatException;
 import com.zos.exception.UserException;
 import com.zos.modal.Chat;
+import com.zos.request.GroupChatRequest;
 
 public interface ChatService {
 
@@ -14,7 +15,7 @@ public interface ChatService {
 	
 	public List<Chat> findAllChatByUserId(Integer userId) throws UserException;
 	
-	public Chat createGroup(List<Integer> userIds,Integer reqUerId) throws UserException;
+	public Chat createGroup(GroupChatRequest req,Integer reqUerId) throws UserException;
 	
 	public Chat addUserToGroup(Integer userId, Integer chatId) throws UserException, ChatException;
 	

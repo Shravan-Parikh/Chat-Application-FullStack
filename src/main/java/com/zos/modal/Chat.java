@@ -32,7 +32,7 @@ public class Chat {
 	private String chat_name;
 	private String chat_image;
 	
-	@OneToMany
+	@ManyToMany
 	private Set<User> admins=new HashSet<>();
 	
 	private Boolean is_group;
