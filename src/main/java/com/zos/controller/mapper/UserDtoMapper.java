@@ -1,6 +1,7 @@
 package com.zos.controller.mapper;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import com.zos.dto.UserDto;
 import com.zos.modal.User;
@@ -21,10 +22,10 @@ public class UserDtoMapper {
 		
 	}
 	
-	public static HashSet<UserDto> toUserDtos(HashSet<User> users){
+	public static HashSet<UserDto> toUserDtos(Set<User> set){
 		HashSet<UserDto> userDtos=new HashSet<>();
 		
-		for(User user:users) {
+		for(User user:set) {
 			UserDto userDto=toUserDTO(user);
 			userDtos.add(userDto);
 		}

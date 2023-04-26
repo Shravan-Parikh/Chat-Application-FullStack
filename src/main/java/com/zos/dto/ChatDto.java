@@ -10,7 +10,7 @@ import jakarta.persistence.Column;
 
 public class ChatDto {
 
-	
+	private Integer id;
 	private String chat_name;
 	private String chat_image;
 	
@@ -29,10 +29,11 @@ public class ChatDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	public ChatDto(String chat_name, String chat_image, Boolean is_group, HashSet<UserDto> admins, UserDto created_by,
-			Set<UserDto> users, List<MessageDto> messages) {
+
+	public ChatDto(Integer id, String chat_name, String chat_image, Boolean is_group, Set<UserDto> admins,
+			UserDto created_by, Set<UserDto> users, List<MessageDto> messages) {
 		super();
+		this.id = id;
 		this.chat_name = chat_name;
 		this.chat_image = chat_image;
 		this.is_group = is_group;
@@ -40,6 +41,15 @@ public class ChatDto {
 		this.created_by = created_by;
 		this.users = users;
 		this.messages = messages;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 

@@ -27,11 +27,15 @@ public class JwtValidatorFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
-		String jwt =response.getHeader(SecurityConstant.HEADER);
+		
+		
+		String jwt =request.getHeader(SecurityConstant.HEADER);
+		
+		System.out.println("validator jwt -------- "+jwt);
 	
 		if(jwt != null) {
+			
 			
 			try {
 
@@ -48,7 +52,9 @@ public class JwtValidatorFilter extends OncePerRequestFilter {
 				
 				Authentication auth=new UsernamePasswordAuthenticationToken(username, null,auths);
 				
+				SecurityContextHolder.getContext().setAuthentication(auth);
 			} catch (Exception e) {
+				System.out.println("invalid token recived...................");
 				throw new BadCredentialsException("invalid token");
 				// TODO: handle exception
 			}
@@ -61,8 +67,8 @@ public class JwtValidatorFilter extends OncePerRequestFilter {
 		
 	}
 	
-	protected boolean shouldNotFilter(HttpServletRequest request) {
-		return request.getServletPath().equals("/sigin");
-	}
+//	protected boolean shouldNotFilter(HttpServletRequest request) {
+//		return request.getServletPath().equals("/sigin");
+//	}
 
 }

@@ -33,6 +33,7 @@ public class MessageServiceImplement implements MessageService{
 	@Override
 	public Message sendMessage(SendMessageRequest req) throws UserException, ChatException {
 		
+		System.out.println("send message ------- ");
 		
 		User user=userService.findUserById(req.getUserId());
 		Chat chat=chatService.findChatById(req.getChatId());

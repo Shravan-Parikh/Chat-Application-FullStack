@@ -25,11 +25,14 @@ public class AppConfig {
 	public SecurityFilterChain securityAppConfig(HttpSecurity http) throws Exception {
 		
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
-		.authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/api/signup").permitAll()
-		.requestMatchers(HttpMethod.POST,"/api/signin").permitAll()
-		.requestMatchers(HttpMethod.GET,"/").permitAll()
-		.anyRequest().authenticated().and()
+		.and().authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/api/**").authenticated()
+                .anyRequest().permitAll()
+            )
+//		.authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/auth/signup").permitAll()
+//		.requestMatchers(HttpMethod.POST,"/auth/signin").permitAll()
+//		.requestMatchers(HttpMethod.GET,"/").permitAll()
+//		.anyRequest().authenticated().and()
 		.addFilterBefore(new JwtValidatorFilter(), BasicAuthenticationFilter.class)
 		.csrf().disable().cors().configurationSource(new CorsConfigurationSource() {
 			

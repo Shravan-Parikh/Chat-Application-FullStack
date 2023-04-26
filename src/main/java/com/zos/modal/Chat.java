@@ -2,6 +2,8 @@ package com.zos.modal;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import com.zos.dto.UserDto;
 
@@ -14,6 +16,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -29,26 +33,31 @@ public class Chat {
 	private String chat_image;
 	
 	@OneToMany
-	private HashSet<User> admins;
+	private Set<User> admins=new HashSet<>();
 	
-	@Column(columnDefinition = "boolean default false")
 	private Boolean is_group;
 	
 	@ManyToOne
 	private User created_by;
 	
 	@ManyToMany
-	private HashSet<User> users =new HashSet<>();
-	
-	@OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
-	private ArrayList<Message> messages=new ArrayList<>();
+	@JoinTable(
+		    name = "chat_users",
+		    joinColumns = @JoinColumn(name = "chat_id"),
+		    inverseJoinColumns = @JoinColumn(name = "user_id")
+		)
+	private Set<User> users = new HashSet<>();
+
+	@OneToMany
+	private List<Message> messages=new ArrayList<>();
 
 	public Chat() {
-		// TODO Auto-generated constructor stub
+		
+		
 	}
-	
-	public Chat(Integer id, String chat_name, String chat_image, HashSet<User> admins, Boolean is_group,
-			User created_by, HashSet<User> users, ArrayList<Message> messages) {
+
+	public Chat(Integer id, String chat_name, String chat_image, Set<User> admins, Boolean is_group,
+			User created_by, Set<User> users, List<Message> messages) {
 		super();
 		this.id = id;
 		this.chat_name = chat_name;
@@ -58,14 +67,6 @@ public class Chat {
 		this.created_by = created_by;
 		this.users = users;
 		this.messages = messages;
-	}
-	
-	public HashSet<User> getAdmins() {
-		return admins;
-	}
-
-	public void setAdmins(HashSet<User> admins) {
-		this.admins = admins;
 	}
 
 	public Integer getId() {
@@ -84,20 +85,22 @@ public class Chat {
 		this.chat_name = chat_name;
 	}
 
-	public ArrayList<Message> getMessages() {
-		return messages;
-	}
-
-	public void setMessages(ArrayList<Message> messages) {
-		this.messages = messages;
-	}
-
 	public String getChat_image() {
 		return chat_image;
 	}
+
 	public void setChat_image(String chat_image) {
 		this.chat_image = chat_image;
 	}
+
+	public Set<User> getAdmins() {
+		return admins;
+	}
+
+	public void setAdmins(Set<User> admins) {
+		this.admins = admins;
+	}
+
 	public Boolean getIs_group() {
 		return is_group;
 	}
@@ -114,13 +117,26 @@ public class Chat {
 		this.created_by = created_by;
 	}
 
-	public HashSet<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(HashSet<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
-	
 
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+
+	@Override
+	public String toString() {
+		return "Chat [id=" + id + ", chat_name=" + chat_name + ", chat_image=" + chat_image + ", admins=" + admins
+				+ ", is_group=" + is_group + ", created_by=" + created_by + ", users=" + users + ", messages="
+				+ messages + "]";
+	}
 }

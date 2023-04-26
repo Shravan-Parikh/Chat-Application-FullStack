@@ -21,7 +21,7 @@ public class ChatDtoMapper {
 		Set<UserDto> admins=UserDtoMapper.toUserDtos(chat.getAdmins());
 		
 		ChatDto chatDto=new ChatDto();
-		
+		chatDto.setId(chat.getId());
 		chatDto.setChat_image(chat.getChat_image());
 		chatDto.setChat_name(chat.getChat_name());
 		chatDto.setCreated_by(userDto);

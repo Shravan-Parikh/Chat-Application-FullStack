@@ -44,6 +44,7 @@ public class ChatController {
 	@PostMapping("/single")
 	public ResponseEntity<ChatDto> creatChatHandler(@RequestBody SingleChatRequest singleChatRequest, @RequestHeader("Authorization")  String jwt) throws UserException{
 		
+		System.out.println("single chat --------");
 		User reqUser=userService.findUserProfile(jwt);
 		
 		Chat chat=chatService.createChat(reqUser.getId(),singleChatRequest.getUserId(),false);
@@ -75,10 +76,12 @@ public class ChatController {
 		
 	}
 	
-	@GetMapping("/user/{userId}")
-	public ResponseEntity<List<ChatDto>> findAllChatByUserIdHandler(@PathVariable Integer userId) throws UserException{
+	@GetMapping("/user")
+	public ResponseEntity<List<ChatDto>> findAllChatByUserIdHandler(@RequestHeader("Authorization")String jwt) throws UserException{
 		
-		List<Chat> chats=chatService.findAllChatByUserId(userId);
+		User user=userService.findUserProfile(jwt);
+		
+		List<Chat> chats=chatService.findAllChatByUserId(user.getId());
 		
 		List<ChatDto> chatDtos=ChatDtoMapper.toChatDtos(chats);
 		

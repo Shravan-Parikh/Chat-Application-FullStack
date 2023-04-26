@@ -36,7 +36,7 @@ public class MessageController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/")
+	@PostMapping("/create")
 	public ResponseEntity<MessageDto> sendMessageHandler(@RequestHeader("Authorization")String jwt,  @RequestBody SendMessageRequest req) throws UserException, ChatException{
 		
 		User reqUser=userService.findUserProfile(jwt);

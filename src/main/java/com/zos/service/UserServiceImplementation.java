@@ -1,5 +1,6 @@
 package com.zos.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,13 @@ public class UserServiceImplementation implements UserService {
 		
 		throw new BadCredentialsException("recive invalid token");
 	}
+
+	@Override
+	public List<User> searchUser(String query) {
+		return userRepo.searchUsers(query);
+		
+	}
+	
+	
 
 }

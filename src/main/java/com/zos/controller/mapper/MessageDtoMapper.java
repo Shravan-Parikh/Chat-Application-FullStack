@@ -17,6 +17,7 @@ public class MessageDtoMapper {
 		UserDto userDto=UserDtoMapper.toUserDTO(message.getUser());
 		
 		MessageDto messageDto=new MessageDto();
+		messageDto.setId(message.getId());
 		messageDto.setChat(chatDto);
 		messageDto.setContent(message.getContent());
 		messageDto.setIs_read(message.getIs_read());

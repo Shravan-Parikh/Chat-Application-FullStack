@@ -3,6 +3,7 @@ package com.zos.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zos.dto.UserDto;
@@ -15,18 +16,25 @@ import com.zos.repository.ChatRepository;
 @Service
 public class ChatServiceImplementation implements ChatService {
 	
+	@Autowired
 	private UserService userService;
 	
+	@Autowired
 	private ChatRepository chatRepo;
 
 	@Override
 	public Chat createChat(Integer reqUserId, Integer userId2, boolean isGroup) throws UserException {
-		// TODO Auto-generated method stub
+		
+		
 		
 		User reqUser=userService.findUserById(reqUserId);
 		User user2 = userService.findUserById(userId2);
 		
-		Chat isChatExist = chatRepo.findSingleChatByUsersId(user2.getId(), reqUser.getId());
+//		System.out.println("before isChatExist");
+		
+		Chat isChatExist = chatRepo.findSingleChatByUsersId(user2, reqUser);
+		
+//		System.out.println("isChatExist ----------------------------- "+isChatExist);
 		
 		if(isChatExist!=null) {
 			return isChatExist;
@@ -39,7 +47,12 @@ public class ChatServiceImplementation implements ChatService {
 		chat.getUsers().add(user2);
 		chat.setIs_group(false);
 		
-		return chatRepo.save(chat);
+//		System.out.println("chat ----------------------------- "+chat);
+		Chat createdChat = chatRepo.save(chat);
+		
+//		
+		
+		return createdChat;
 	}
 
 	
@@ -59,9 +72,13 @@ public class ChatServiceImplementation implements ChatService {
 	@Override
 	public List<Chat> findAllChatByUserId(Integer userId) throws UserException {
 		
+		System.out.println("find chat ----------------------------- ");
+		
 		User user=userService.findUserById(userId);
 		
 		List<Chat> chats=chatRepo.findChatByUserId(user.getId());
+		
+		System.out.println("find chat ----------------------------- "+chats);
 		
 		return chats;
 	}

@@ -28,7 +28,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/auth")
 public class AuthController {
 	
 	private UserRepository userRepository;
