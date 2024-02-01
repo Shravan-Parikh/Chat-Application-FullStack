@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.zos</groupId>
-	<artifactId>whats-up-api-springboot</artifactId>
+	<artifactId>springboot-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>whats-up-api-springboot</name>
 	<description>ecommerce website backend</description>
