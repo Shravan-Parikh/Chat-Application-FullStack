@@ -1,0 +1,5 @@
+FROM eclipse-temurin:17-jdk-alpine
+VOLUME /tmp
+COPY target/*.jar springboot-app.jar
+ENTRYPOINT ["java","-jar","/springboot-app.jar"]
+EXPOSE 5454
